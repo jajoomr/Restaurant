@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.mayurjajoo.restaurant.repository.MenuRepository
 import com.mayurjajoo.restaurant.repository.RestaurantRepository
 
-class MainViewModelFactory(
+/**
+ * Responsible for providing RestaurantViewModel
+ */
+class RestaurantListViewModelFactory(
     private val mRestaurantRepository: RestaurantRepository,
     private val mMenuRepository: MenuRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(mRestaurantRepository, mMenuRepository) as T
+        return RestaurantListViewModel(mRestaurantRepository, mMenuRepository) as T
     }
 }

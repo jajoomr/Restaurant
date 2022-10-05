@@ -8,7 +8,10 @@ import com.mayurjajoo.restaurant.model.Restaurant
 import com.mayurjajoo.restaurant.repository.MenuRepository
 import com.mayurjajoo.restaurant.repository.RestaurantRepository
 
-class MainViewModel(
+/**
+ * Responsible for getting data from repository and updating View class
+ */
+class RestaurantListViewModel(
     private val mRestaurantRepository: RestaurantRepository,
     private val mMenuRepository: MenuRepository
 ) : ViewModel() {
@@ -16,7 +19,7 @@ class MainViewModel(
     val restaurantListLiveData: LiveData<List<Restaurant>>
         get() = mRestaurantRepository.restaurantList
 
-    val menuListLiveData: LiveData<List<MenuX>>
+    private val menuListLiveData: LiveData<List<MenuX>>
         get() = mMenuRepository.restaurantList
 
     private val _filteredRestaurantList = MutableLiveData<List<Restaurant>>()
@@ -30,26 +33,29 @@ class MainViewModel(
     }
 
     /**
-     * Filters list based on search text
+     * filter list based on searched text
+     *
+     * @param searchText - text searched on search bar
      */
     fun filterList(searchText: String) {
         val filteredList: MutableList<Restaurant> = ArrayList()
-        val restIdList: MutableList<Int> = ArrayList()
+        val restaurantIdList: MutableList<Int> = ArrayList()
 
         //search by menu name
         for (menu in menuListLiveData.value!!) {
             for (category in menu.categories) {
                 for (menuItem in category.menuItems) {
                     if (menuItem.name.contains(searchText, true)) {
-                        restIdList.add(menu.restaurantId)
+                        restaurantIdList.add(menu.restaurantId)
                     }
                 }
             }
         }
 
-        if (restIdList.isNotEmpty()) {
+        if (restaurantIdList.isNotEmpty()) {
+            //if restaurant is found for searched menu item then update the filtered list
             for (restaurant in restaurantListLiveData.value!!) {
-                if (restIdList.contains(restaurant.id)) {
+                if (restaurantIdList.contains(restaurant.id)) {
                     filteredList.add(restaurant)
                 }
             }
@@ -74,5 +80,19 @@ class MainViewModel(
         }
         //finally update the live data
         _filteredRestaurantList.postValue(filteredList)
+    }
+
+    private fun getFilteredListByMenu(searchText: String): MutableList<Int> {
+        val restaurantIdList: MutableList<Int> = ArrayList()
+        for (menu in menuListLiveData.value!!) {
+            for (category in menu.categories) {
+                for (menuItem in category.menuItems) {
+                    if (menuItem.name.contains(searchText, true)) {
+                        restaurantIdList.add(menu.restaurantId)
+                    }
+                }
+            }
+        }
+        return restaurantIdList
     }
 }

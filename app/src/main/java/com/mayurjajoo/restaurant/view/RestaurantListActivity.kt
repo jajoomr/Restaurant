@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mayurjajoo.restaurant.R
 import com.mayurjajoo.restaurant.RestaurantApplication
 import com.mayurjajoo.restaurant.adapter.RestaurantListAdapter
-import com.mayurjajoo.restaurant.viewModel.MainViewModel
-import com.mayurjajoo.restaurant.viewModel.MainViewModelFactory
+import com.mayurjajoo.restaurant.viewModel.RestaurantListViewModel
+import com.mayurjajoo.restaurant.viewModel.RestaurantListViewModelFactory
 
 /**
  * Responsible for displaying Restaurant List
  */
-class MainActivity : AppCompatActivity() {
+class RestaurantListActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mMainViewModel: MainViewModel
+    private lateinit var mRestaurantListViewModel: RestaurantListViewModel
     private lateinit var mRestaurantAdapter: RestaurantListAdapter
     private lateinit var mSearchView: SearchView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,26 +31,28 @@ class MainActivity : AppCompatActivity() {
      * Initialize components
      */
     private fun initialize() {
-        mMainViewModel = ViewModelProvider(
+        mRestaurantListViewModel = ViewModelProvider(
             this,
-            MainViewModelFactory(
+            RestaurantListViewModelFactory(
                 RestaurantApplication.restaurantRepository,
                 RestaurantApplication.menuRepository
             )
-        ).get(MainViewModel::class.java)
+        ).get(RestaurantListViewModel::class.java)
 
         //initialisation for recycler view
         mRecyclerView = findViewById(R.id.rv_restaurants)
         mRestaurantAdapter = RestaurantListAdapter(this)
         mRecyclerView.apply {
             adapter = mRestaurantAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@RestaurantListActivity)
         }
 
         initializeSearchView()
-
     }
 
+    /**
+     * Initialise search view
+     */
     private fun initializeSearchView() {
         mSearchView = findViewById(R.id.search_bar)
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
      * @param searchText - text searched on search bar
      */
     private fun filterList(searchText: String) {
-        mMainViewModel.filterList(searchText)
+        mRestaurantListViewModel.filterList(searchText)
     }
 
     override fun onResume() {
@@ -81,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeFilteredList() {
-        mMainViewModel.filteredRestaurantListLiveData.observe(this) {
+        mRestaurantListViewModel.filteredRestaurantListLiveData.observe(this) {
             mRestaurantAdapter.updateList(it)
         }
     }
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity() {
      * Observes live data from view model and updates UI
      */
     private fun observeLiveDataAndUpdate() {
-        mMainViewModel.restaurantListLiveData.observe(this) {
+        mRestaurantListViewModel.restaurantListLiveData.observe(this) {
             mRestaurantAdapter.updateList(it)
         }
     }

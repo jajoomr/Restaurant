@@ -9,13 +9,13 @@ This app displays list of restaurants and contains a search bar which filters re
 ![restaurant_class_diagram drawio](https://user-images.githubusercontent.com/86013600/194097929-41972d59-584b-464a-bdef-80169696a978.png)
 
 
-RestaurantListActivity: It is the main activity and is responsible for displaying list of restaurants and a search bar. It observes RestaurantListViewModel and updates the UI accordingly.
+[RestaurantListActivity](https://github.com/jajoomr/Restaurant/blob/main/app/src/main/java/com/mayurjajoo/restaurant/view/RestaurantListActivity.kt): It is the main activity and is responsible for displaying list of restaurants and a search bar. It observes RestaurantListViewModel and updates the UI accordingly.
 
-RestaurantListViewModel: It is responsible for all the business logic. It fetches data from repository and updates RestaurantListActivity
+[RestaurantListViewModel](https://github.com/jajoomr/Restaurant/blob/main/app/src/main/java/com/mayurjajoo/restaurant/viewModel/RestaurantListViewModel.kt): It is responsible for all the business logic. It fetches data from repository and updates RestaurantListActivity
 
-RestaurantRepository: It is responsible for fetching Restaurant data from data source and sending it to ViewModel.
+[RestaurantRepository](https://github.com/jajoomr/Restaurant/blob/main/app/src/main/java/com/mayurjajoo/restaurant/repository/RestaurantRepository.kt): It is responsible for fetching Restaurant data from data source and sending it to ViewModel.
 
-MenuRepository: It is responsible for fetching data of Menu Items from data source and sending it to ViewModel.
+[MenuRepository](https://github.com/jajoomr/Restaurant/blob/main/app/src/main/java/com/mayurjajoo/restaurant/repository/MenuRepository.kt): It is responsible for fetching data of Menu Items from data source and sending it to ViewModel.
 
 **Filtering Feature**
 Whenever user searches text in the search bar, the activity triggers the request to filter the restaurant list to the viewModel.

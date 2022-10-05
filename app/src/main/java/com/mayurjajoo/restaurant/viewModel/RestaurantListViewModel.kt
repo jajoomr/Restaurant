@@ -17,10 +17,10 @@ class RestaurantListViewModel(
 ) : ViewModel() {
 
     val restaurantListLiveData: LiveData<List<Restaurant>>
-        get() = mRestaurantRepository.restaurantList
+        get() = mRestaurantRepository.restaurantListLiveData
 
     private val menuListLiveData: LiveData<List<MenuX>>
-        get() = mMenuRepository.restaurantList
+        get() = mMenuRepository.menuListLiveData
 
     private val _filteredRestaurantList = MutableLiveData<List<Restaurant>>()
 

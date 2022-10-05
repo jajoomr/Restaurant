@@ -19,6 +19,7 @@ class RestaurantListAdapter(private val mContext: Context) :
 
     inner class RestaurantListviewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val restaurantName: TextView = itemView.findViewById(R.id.tv_restaurant_name)
+        val cuisineType: TextView = itemView.findViewById(R.id.tv_cusine_type_value)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantListviewHolder {
@@ -30,6 +31,7 @@ class RestaurantListAdapter(private val mContext: Context) :
     override fun onBindViewHolder(holder: RestaurantListviewHolder, position: Int) {
         val restaurantItem = mRestaurantList[position]
         holder.restaurantName.text = restaurantItem.name
+        holder.cuisineType.text = restaurantItem.cuisine_type
     }
 
     /**

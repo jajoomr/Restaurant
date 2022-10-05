@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Restaurant</string>
+    <string name="dummy_name">Dummy Name</string>
+    <string name="cuisine_type">Cuisine Type:</string>
 </resources>
